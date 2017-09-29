@@ -1,0 +1,21 @@
+import pandas
+titanic=pandas.read_csv('E:/Coding/train.csv')
+titanic["Age"]=titanic["Age"].fillna(titanic["Age"].median())
+titanic.loc[titanic["Sex"]=="male","Sex"]=0
+titanic.loc[titanic["Sex"]=="female","Sex"]=1
+titanic.loc[titanic["Embarked"]=="S","Embarked"]=0
+titanic.loc[titanic["Embarked"]=="C","Embarked"]=1
+titanic.loc[titanic["Embarked"]=="Q","Embarked"]=2
+print(titanic.describe())
+
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.cross_validation import KFold
+predictors=["Pclass","Sex","Age","SibSp","Parch","Fare","Embarked"]
+alg=LogisticRegression(random_state=1)
+kf=KFold(titanic.shape[0],n_folds=3,random_state=1)
+score=
+
+
+help(alg.fit)
+
