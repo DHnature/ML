@@ -1,0 +1,22 @@
+import pandas
+titanic=pandas.read_csv('E:/Coding/train.csv')
+titanic["Age"]=titanic["Age"].fillna(titanic["Age"].median())
+titanic.loc[titanic["Sex"]=="male","Sex"]=0
+titanic.loc[titanic["Sex"]=="female","Sex"]=1
+titanic["Embarked"]=titanic["Embarked"].fillna("S")
+titanic.loc[titanic["Embarked"]=="S","Embarked"]=0
+titanic.loc[titanic["Embarked"]=="C","Embarked"]=1
+titanic.loc[titanic["Embarked"]=="Q","Embarked"]=2
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.cross_validation import KFold
+from sklearn import cross_validation
+predictors=["Pclass","Sex","Age","SibSp","Parch","Fare","Embarked"]
+alg=RandomForestClassifier(random_state=1,n_estimators=100,min_samples_split=4,min_samples_leaf=2)
+kf=KFold(titanic.shape[0],n_folds=3,random_state=1)
+
+scores=cross_validation.cross_val_score(alg,titanic[predictors],titanic["Survived"],cv=kf)
+print(scores.mean())
+help(cross_validation.cross_val_score)
+
+
